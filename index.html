@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝗱𝗮𝘆 𝗯𝘆 𝗱𝗮𝘆 𝗺𝗮𝗱𝗲 𝘁𝗼 𝘀𝗺𝗶𝗹𝗲</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        .background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: transform 1s ease-in-out;
+        }
+        
+        .welcome-screen.hidden {
+            transform: translateY(-100%);
+        }
+        
+        .welcome-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        .start-button {
+            padding: 15px 50px;
+            font-size: 1.5rem;
+            background: #fff;
+            color: #ff6b6b;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .start-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            background: #f8f9fa;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: none;
+            padding-top: 50px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: #ffd166;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 30px 0;
+        }
+        
+        .photo-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .photo-description {
+            padding: 20px;
+            font-size: 1.2rem;
+            color: #f8f9fa;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            font-size: 1.2rem;
+            color: #a9d6e5;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .music-control {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .music-control:hover {
+            transform: scale(1.1);
+            background: #ff5252;
+        }
+        
+        .song-title {
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Image -->
+    <div class="background">
+        <img src="https://files.catbox.moe/yilrxo.jpg" alt="Background">
+    </div>
+    
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <h1 class="welcome-title">𝗪𝗘𝗟𝗖𝗢𝗠𝗘</h1>
+        <button class="start-button" id="startButton">𝐏𝐋𝐀𝐘</button>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="container">
+            <div class="header">
+                <h1>𝗙𝗢𝗧𝗢 𝗦𝗣𝗘𝗦𝗜𝗔𝗟🤍😻</h1>
+            </div>
+            
+            <div class="gallery">
+                <!-- Foto 1 -->
+                <div class="photo-card">
+                    <img src="https://files.catbox.moe/ergs2r.jpg" alt="FOTO SPESIAL">
+                    <div class="photo-description">𝘀𝗲𝗹𝗮𝗶𝗻 𝗮𝗸𝘂 𝘁𝗮𝗸𝘂𝘁 𝗸𝗲𝗵𝗶𝗹𝗮𝗻𝗴𝗮𝗻𝗺𝘂,𝗮𝗸𝘂 𝗷𝘂𝗴𝗮 𝘁𝗮𝗸𝘂𝘁 𝗮𝗱𝗮 𝘆𝗮𝗻𝗴 𝗹𝗲𝗯𝗶𝗵 𝗵𝗲𝗯𝗮𝘁 𝗺𝗲𝗻𝗴𝗮𝗺𝗯𝗶𝗹 𝗵𝗮𝘁𝗶𝗺𝘂</div>
+                </div>
+                
+                <!-- Foto 2 -->
+                <div class="photo-card">
+                    <img src="https://files.catbox.moe/0zxmhs.jpg" alt="FOTO SPESIAL">
+                    <div class="photo-description">𝗻𝗶𝗮𝘁𝗸𝘂 𝗯𝗲𝗿𝘀𝗮𝗺𝗮𝗺𝘂 𝗶𝘁𝘂 𝘁𝘂𝗹𝘂𝘀, 𝗱𝗮𝗻 𝗮𝗸𝘂 𝘁𝗶𝗱𝗮𝗸 𝗯𝗲𝗿𝗳𝗶𝗸𝗶𝗿 𝘂𝗻𝘁𝘂𝗸 𝗺𝗲𝗺𝗽𝗲𝗿𝗺𝗮𝗶𝗻𝗸𝗮𝗻 𝗸𝗮𝗺𝘂</div>
+                </div>
+                
+                <!-- Foto 3 -->
+                <div class="photo-card">
+                    <img src="https://files.catbox.moe/ekrog5.jpg" alt="FOTO SPESIAL">
+                    <div class="photo-description">𝗮𝗸𝘂 𝗼𝗿𝗮𝗻𝗴𝗻𝘆𝗮 𝗲𝗻𝗴𝗴𝗮𝗸 𝘀𝘂𝗸𝗮 𝗱𝗶 𝗴𝗮𝗻𝗴𝗴𝘂, 𝘁𝗮𝗽𝗶 𝗸𝗮𝗹𝗼 𝗸𝗮𝗺𝘂 𝘆𝗮𝗻𝗴 𝗴𝗮𝗻𝗴𝗴𝘂, 𝗮𝗸𝘂 𝘀𝘂𝗸𝗮 😋</div>
+                </div>
+                
+                <!-- Foto 4 -->
+                <div class="photo-card">
+                    <img src="https://files.catbox.moe/843lnc.jpg" alt="FOTO SPESIAL">
+                    <div class="photo-description">𝗽𝗮𝗻𝗱𝗮 𝗽𝗮𝗻𝗱𝗮 𝗮𝗽𝗮 𝘆𝗮𝗻𝗴 𝗯𝗶𝗸𝗶𝗻 𝘀𝗮𝗹𝘁𝗶𝗻𝗴? 𝗽𝗮𝗻𝗱𝗮𝗻𝗴𝗶𝗻 𝗣𝗼𝘁𝗼 𝗸𝗮𝗺𝘂𝘂 𝗲𝗮𝗸𝗸 𝗲𝘆𝘆 𝗲𝘆𝘆🫣</div>
+                </div>
+                
+                <!-- Foto 5 -->
+                <div class="photo-card">
+                    <img src="https://files.catbox.moe/aq95u5.jpg" alt="FOTO SPESIAL">
+                    <div class="photo-descriptiON">𝗸𝗮𝗹𝗼 𝗱𝗶𝗵𝗶𝘁𝘂𝗻𝗴 𝗱𝗮𝗿𝗶 𝘀𝗮𝘁𝘂 𝘀𝗮𝗺𝗽𝗮𝗶 𝘀𝗲𝗽𝘂𝗹𝘂𝗵 𝗰𝗶𝗻𝘁𝗮𝗸𝘂𝘂 𝗽𝗮𝗱𝗮𝗺𝘂𝘂𝗵𝗮𝗻𝘆𝗮 𝗹𝗶𝗺𝗮, 𝗹𝗶𝗺𝗮𝗶𝘁𝗶𝗱 𝗵𝗲𝗵𝗲𝗵𝗲𝗵𝗲𝗵 😻💖</div>
+                </div>
+                
+                <!-- Foto 6 -->
+                <div class="photo-card">
+                    <img src="https://files.catbox.moe/15plj8.jpg" alt="FOTO SPESIAL">
+                    <div class="photo-description">𝗸𝗮𝗺𝘂𝘂𝘂 𝘁𝗲𝘁𝗲𝗽𝗽 𝘀𝗮𝗺𝗮𝗮 𝗮𝗸𝘂𝘂𝘆𝗮𝗮𝗮𝗮𝗮𝗮𝗮, 𝗴𝗮𝗯𝗼𝗹𝗲𝗲𝗲𝗲𝗲𝗲 𝗻𝗶𝗻𝗴𝗴𝗮𝗹𝗶𝗻𝗻𝗻 😠😠🖕😝</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>@BY ALVINO/NESYA 2025</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Music Player -->
+    <div class="music-player">
+        <span class="song-title">LAGU : SPESIAL🤍</span>
+        <button class="music-control" id="playButton">▶</button>
+        <button class="music-control" id="pauseButton">⏸</button>
+    </div>
+    
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://files.catbox.moe/be337g.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const startButton = document.getElementById('startButton');
+            const mainContent = document.getElementById('mainContent');
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            const playButton = document.getElementById('playButton');
+            const pauseButton = document.getElementById('pauseButton');
+            
+            // Start button click event
+            startButton.addEventListener('click', function() {
+                // Hide welcome screen
+                welcomeScreen.classList.add('hidden');
+                
+                // Show main content after animation
+                setTimeout(() => {
+                    mainContent.style.display = 'block';
+                    // Start playing music
+                    backgroundMusic.play();
+                }, 800);
+            });
+            
+            // Music controls
+            playButton.addEventListener('click', function() {
+                backgroundMusic.play();
+            });
+            
+            pauseButton.addEventListener('click', function() {
+                backgroundMusic.pause();
+            });
+            
+            // Autoplay music after user interaction
+            document.body.addEventListener('click', function() {
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play().catch(e => console.log("Autoplay prevented"));
+                }
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
